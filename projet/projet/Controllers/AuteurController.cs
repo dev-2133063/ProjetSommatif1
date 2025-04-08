@@ -18,7 +18,7 @@ namespace projet.Controllers
             dal = new DAL();
         }
 
-        // GET: api/<auteurController>
+        // GET: api/<AuteurController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType<IEnumerable<Auteur>>(StatusCodes.Status200OK)]
@@ -32,7 +32,7 @@ namespace projet.Controllers
             return Ok(auteurs);
         }
 
-        // GET: api/<auteurController>
+        // GET: api/<AuteurController>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType<Auteur>(StatusCodes.Status200OK)]
@@ -86,7 +86,7 @@ namespace projet.Controllers
             return Ok();
         }
 
-        // DELETE api/<FruitController>/5
+        // DELETE api/<AuteurController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

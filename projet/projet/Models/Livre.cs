@@ -10,6 +10,8 @@ namespace projet.Models
         public int NbPages { get; set; }
         public int AuteurId { get; set; }
         public int CategorieId { get; set; }
+        public Auteur Auteur { get; set; }
+        public Categorie Categorie { get; set; }
         public Livre() { }
         public Livre(int id, string isbn, string titre, int nbPages, int auteurId, int categorieId)
         {

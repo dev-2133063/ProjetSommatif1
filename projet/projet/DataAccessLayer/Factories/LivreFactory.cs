@@ -7,6 +7,8 @@ namespace ProjetISDP1.DataAccessLayer.Factories
     {
         private Livre CreateFromReader(MySqlDataReader mySqlDataReader)
         {
+            DAL dal = new DAL();
+
             int id = (int)mySqlDataReader["Id"];
             string isbn = mySqlDataReader["ISBN"].ToString();
             string titre = mySqlDataReader["Titre"].ToString();
@@ -14,7 +16,12 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             int auteurId = (int)mySqlDataReader["AuteurId"];
             int categorieId = (int)mySqlDataReader["CategorieId"];
 
-            return new Livre(id, isbn, titre, nbPages, auteurId, categorieId);
+            Livre livre = new Livre(id, isbn, titre, nbPages, auteurId, categorieId);
+
+            livre.Auteur = dal.AuteurFactory.Get(auteurId);
+            livre.Categorie = dal.CategoryFactory.Get(categorieId);
+
+            return livre;
         }
 
         public Livre CreateEmpty()
@@ -81,6 +88,118 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             return livre;
         }
 
+        /// <summary>
+        /// Trouve les livre qui sont emprunté ou pas selon le choix.
+        /// True -> dispo
+        /// False -> Emprunté
+        /// </summary>
+        /// <param name="disponibilite"></param>
+        /// <returns>Las liste de livre correspondant</returns>
+        public Livre[] GetDispo(bool disponibilite = true)
+        {
+            List<Livre> livres = new List<Livre>();
+            MySqlConnection mySqlCnn = null;
+            MySqlDataReader mySqlDataReader = null;
+
+            try
+            {
+                mySqlCnn = new MySqlConnection(DAL.ConnectionString);
+                mySqlCnn.Open();
+
+                MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
+
+                if (disponibilite) mySqlCmd.CommandText = "SELECT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
+                                       "FROM projet_livre liv " +
+                                       "LEFT JOIN projet_emprunt emp ON liv.Id = emp.LivreId " +
+                                       "WHERE emp.LivreId IS NULL;";
+                else mySqlCmd.CommandText = "SELECT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
+                                       "FROM projet_livre liv " +
+                                       "LEFT JOIN projet_emprunt emp ON liv.Id = emp.LivreId " +
+                                       "WHERE emp.LivreId IS NOT NULL;";
+
+                mySqlDataReader = mySqlCmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    livres.Add(CreateFromReader(mySqlDataReader));
+                }
+            }
+            finally
+            {
+                mySqlDataReader?.Close();
+                mySqlCnn?.Close();
+            }
+
+            return livres.ToArray();
+        }
+
+        public Livre[] GetInDispoMembre(int id)
+        {
+            List<Livre> livres = new List<Livre>();
+            MySqlConnection mySqlCnn = null;
+            MySqlDataReader mySqlDataReader = null;
+
+            try
+            {
+                mySqlCnn = new MySqlConnection(DAL.ConnectionString);
+                mySqlCnn.Open();
+
+                MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
+                mySqlCmd.CommandText = "SELECT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
+                                       "FROM projet_livre liv " +
+                                       "LEFT JOIN projet_emprunt emp ON liv.Id = emp.LivreId " +
+                                       "WHERE emp.LivreId IS NOT NULL " +
+                                       "AND emp.MembreId = @Id;";
+
+                mySqlCmd.Parameters.AddWithValue("@Id", id);
+                mySqlDataReader = mySqlCmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    livres.Add(CreateFromReader(mySqlDataReader));
+                }
+            }
+            finally
+            {
+                mySqlDataReader?.Close();
+                mySqlCnn?.Close();
+            }
+
+            return livres.ToArray();
+        }
+
+        /// <summary>
+        /// Cherche tout les livres  qui ont une historique d'emprunt
+        /// </summary>
+        /// <returns>La liste de livres</returns>
+        public Livre[] GetAllDejaEmprunte()
+        {
+            List<Livre> livres = new List<Livre>();
+            MySqlConnection mySqlCnn = null;
+            MySqlDataReader mySqlDataReader = null;
+
+            try
+            {
+                mySqlCnn = new MySqlConnection(DAL.ConnectionString);
+                mySqlCnn.Open();
+
+                MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
+                mySqlCmd.CommandText = "SELECT DISTINCT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
+                                       "FROM projet_emprunt emp " +
+                                       "LEFT JOIN projet_livre liv ON emp.LivreId = liv.Id;";
+
+                mySqlDataReader = mySqlCmd.ExecuteReader();
+                while (mySqlDataReader.Read())
+                {
+                    livres.Add(CreateFromReader(mySqlDataReader));
+                }
+            }
+            finally
+            {
+                mySqlDataReader?.Close();
+                mySqlCnn?.Close();
+            }
+
+            return livres.ToArray();
+        }
         public void Save(Livre livre)
         {
             MySqlConnection mySqlCnn = null;
