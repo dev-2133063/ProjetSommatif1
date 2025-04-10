@@ -93,10 +93,15 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                 {
                     if (membre.Id == 0)
                     {
+                        //Génere un clé lors de la création d'un membre peu importe l'input de l'utilisateur
+                        string key = System.Guid.NewGuid().ToString();
+
                         // Nouvel membre
                         mySqlCmd.CommandText =
                             "INSERT INTO projet_membre(Nom, Courriel, Telephone, DateCreation, ApiKey) " +
                             "VALUES (@Nom, @Courriel, @Telephone, @DateCreation, @ApiKey)";
+
+                        mySqlCmd.Parameters.AddWithValue("@ApiKey", key.Trim());
                     }
                     else
                     {
@@ -107,6 +112,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                             "WHERE Id=@Id";
 
                         mySqlCmd.Parameters.AddWithValue("@Id", membre.Id);
+                        mySqlCmd.Parameters.AddWithValue("@ApiKey", membre.ApiKey.Trim());
                     }
 
                     // Ajout des paramètres communs
@@ -114,7 +120,6 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                     mySqlCmd.Parameters.AddWithValue("@Courriel", membre.Courriel.Trim());
                     mySqlCmd.Parameters.AddWithValue("@Telephone", membre.Telephone.Trim());
                     mySqlCmd.Parameters.AddWithValue("@DateCreation", membre.DateCreation);
-                    mySqlCmd.Parameters.AddWithValue("@ApiKey", membre.ApiKey.Trim());
 
                     // Exécution de la commande
                     mySqlCmd.ExecuteNonQuery();

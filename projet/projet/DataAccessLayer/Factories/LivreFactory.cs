@@ -167,10 +167,11 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         }
 
         /// <summary>
-        /// Cherche tout les livres  qui ont une historique d'emprunt
+        /// Cherche tout les livres qui ont une historique d'emprunt (si membreId == -1)
+        /// sinon retourne l'historique des emprunts d'un membre
         /// </summary>
         /// <returns>La liste de livres</returns>
-        public Livre[] GetAllDejaEmprunte()
+        public Livre[] GetAllDejaEmprunte(int membreId = -1)
         {
             List<Livre> livres = new List<Livre>();
             MySqlConnection mySqlCnn = null;
@@ -182,10 +183,21 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                 mySqlCnn.Open();
 
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
-                mySqlCmd.CommandText = "SELECT DISTINCT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
-                                       "FROM projet_emprunt emp " +
-                                       "LEFT JOIN projet_livre liv ON emp.LivreId = liv.Id;";
+                if (membreId != -1)
+                {
+                    mySqlCmd.CommandText = "SELECT DISTINCT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
+                                           "FROM projet_emprunt emp " +
+                                           "LEFT JOIN projet_livre liv ON emp.LivreId = liv.Id;";
+                }
+                else
+                {
+                    mySqlCmd.CommandText = "SELECT DISTINCT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
+                                           "FROM projet_emprunt emp " +
+                                           "LEFT JOIN projet_livre liv ON emp.LivreId = liv.Id" +
+                                           "WHERE emp.MembreId = @membreId;";
+                }
 
+                mySqlCmd.Parameters.AddWithValue("@membreId", membreId);
                 mySqlDataReader = mySqlCmd.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {

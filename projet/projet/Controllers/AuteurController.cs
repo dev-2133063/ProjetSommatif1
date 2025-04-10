@@ -57,7 +57,10 @@ namespace projet.Controllers
 
             auteur.Id = 0;
 
-            try { dal.AuteurFactory.Save(auteur); }
+            try 
+            { 
+                dal.AuteurFactory.Save(auteur); 
+            }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Une erreur c'est produite lors du traitement de cette requete.");
@@ -77,7 +80,10 @@ namespace projet.Controllers
 
             auteur.Id = id;
 
-            try { dal.AuteurFactory.Save(auteur); }
+            try 
+            { 
+                dal.AuteurFactory.Save(auteur); 
+            }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Une erreur c'est produite lors du traitement de cette requete.");
@@ -94,7 +100,10 @@ namespace projet.Controllers
             foreach (Livre livre in dal.LivreFactory.GetAll())
                 if (livre.Id == id) return StatusCode(StatusCodes.Status403Forbidden, "Cet auteur est associe a un livre, impossible de supprimer.");
 
-            try { dal.AuteurFactory.Delete(id); }
+            try 
+            { 
+                dal.AuteurFactory.Delete(id); 
+            }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Une erreur c'est produite lors du traitement de cette requete.");

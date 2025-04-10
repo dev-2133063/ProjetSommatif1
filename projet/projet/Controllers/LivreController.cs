@@ -126,12 +126,15 @@ namespace projet.Controllers
         }
 
         // GET: api/<LivreController>/emprunt
-        [HttpGet("/emprunt")]
+        [HttpGet("/historiqueEmprunt/{membreId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType<List<Livre>>(StatusCodes.Status200OK)]
-        public ActionResult<List<Livre>> GetHistEmprunt()
+        public ActionResult<List<Livre>> GetHistEmprunt(int membreId)
         {
-            Livre[] livres = dal.LivreFactory.GetAllDejaEmprunte();
+            if (membreId < 0) return BadRequest("ID invalide.");
+
+            Livre[] livres = dal.LivreFactory.GetAllDejaEmprunte(membreId);
 
             if (livres.Any()) return Ok(livres);
 
@@ -173,7 +176,10 @@ namespace projet.Controllers
 
             livre.Id = id;
 
-            try { dal.LivreFactory.Save(livre); }
+            try 
+            { 
+                dal.LivreFactory.Save(livre); 
+            }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Une erreur c'est produite lors du traitement de cette requete.");
@@ -196,8 +202,14 @@ namespace projet.Controllers
             foreach (Livre livre in livres)
                 if (livre.Id == id)
                     return BadRequest("Impossible de supprimer ce livre, car il a une historique d'emprunt.");
-
-            dal.LivreFactory.Delete(id);
+            try
+            {
+                dal.LivreFactory.Delete(id);
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Une erreur c'est produite lors du traitement de cette requete.");
+            }
 
             return Ok();
         }

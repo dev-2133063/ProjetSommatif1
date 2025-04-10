@@ -17,6 +17,14 @@
             Telephone = telephone;
             DateCreation = dateCreation;
             ApiKey = apikey;
+
+            //verification de cle invalide ou null
+            if (string.IsNullOrEmpty(this.ApiKey) || this.ApiKey.Length != 36) GenerateKey();
+        }
+
+        private void GenerateKey()
+        {
+            this.ApiKey = System.Guid.NewGuid().ToString();
         }
     }
 }
