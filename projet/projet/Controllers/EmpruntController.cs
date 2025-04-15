@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using projet.Models;
+using projet.Security.Authorization;
 using ProjetISDP1.DataAccessLayer;
 
 namespace projet.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [CustomAuthorize(Roles.Admin)]
     public class EmpruntController : ControllerBase
     {
         DAL dal;

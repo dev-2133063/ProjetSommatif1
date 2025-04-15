@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using projet.Models;
+using projet.Security.Authorization;
 using ProjetISDP1.DataAccessLayer;
 
 namespace projet.Controllers
@@ -21,6 +22,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [CustomAuthorize(Roles.Admin)]
         public IActionResult Post([FromBody] Membre membre)
         {
             if (membre is null) return StatusCode(StatusCodes.Status412PreconditionFailed, "Membre invalide.");

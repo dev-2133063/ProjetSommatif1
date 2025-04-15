@@ -80,6 +80,36 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             return membre;
         }
 
+        public Membre GetViaKey(string apikey)
+        {
+            Membre membre = null;
+            MySqlConnection mySqlCnn = null;
+            MySqlDataReader mySqlDataReader = null;
+
+            try
+            {
+                mySqlCnn = new MySqlConnection(DAL.ConnectionString);
+                mySqlCnn.Open();
+
+                MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
+                mySqlCmd.CommandText = "SELECT * FROM projet_membre WHERE Apikey = @Apikey";
+                mySqlCmd.Parameters.AddWithValue("@Apikey", apikey);
+
+                mySqlDataReader = mySqlCmd.ExecuteReader();
+                if (mySqlDataReader.Read())
+                {
+                    membre = CreateFromReader(mySqlDataReader);
+                }
+            }
+            finally
+            {
+                mySqlDataReader?.Close();
+                mySqlCnn?.Close();
+            }
+
+            return membre;
+        }
+
         public void Save(Membre membre)
         {
             MySqlConnection mySqlCnn = null;
@@ -96,7 +126,6 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                         //Génere un clé lors de la création d'un membre peu importe l'input de l'utilisateur
                         string key = System.Guid.NewGuid().ToString();
 
-                        // Nouvel membre
                         mySqlCmd.CommandText =
                             "INSERT INTO projet_membre(Nom, Courriel, Telephone, DateCreation, ApiKey) " +
                             "VALUES (@Nom, @Courriel, @Telephone, @DateCreation, @ApiKey)";

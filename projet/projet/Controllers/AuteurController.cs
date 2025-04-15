@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProjetISDP1.DataAccessLayer;
 using projet.Models;
 using System.Reflection.Metadata.Ecma335;
+using projet.Security.Authorization;
 
 namespace projet.Controllers
 {
@@ -51,6 +52,8 @@ namespace projet.Controllers
         // POST: api/<AuteurController>/5
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
+        [ProducesResponseType<Auteur>(StatusCodes.Status200OK)]
+        [CustomAuthorize(Roles.Admin)]
         public IActionResult Post([FromBody]Auteur auteur)
         {
             if (auteur is null) return StatusCode(StatusCodes.Status412PreconditionFailed);
@@ -73,6 +76,8 @@ namespace projet.Controllers
         // PUT: api/<AuteurController>/5
         [HttpPost("{id}")]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
+        [ProducesResponseType<Auteur>(StatusCodes.Status200OK)]
+        [CustomAuthorize(Roles.Admin)]
         public IActionResult Put(int id, [FromBody] Auteur auteur)
         {
             if (id < 0 || auteur is null) return StatusCode(StatusCodes.Status412PreconditionFailed);
@@ -94,6 +99,11 @@ namespace projet.Controllers
 
         // DELETE api/<AuteurController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType<Auteur>(StatusCodes.Status200OK)]
+        [CustomAuthorize(Roles.Admin)]
         public IActionResult Delete(int id)
         {
             if (dal.AuteurFactory.Get(id) is null) return NotFound();

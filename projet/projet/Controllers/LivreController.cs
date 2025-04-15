@@ -1,14 +1,17 @@
 ﻿using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Asn1.Misc;
 using projet.Models;
+using projet.Security.Authorization;
 using ProjetISDP1.DataAccessLayer;
 
 namespace projet.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [CustomAuthorize(Roles.User)]
     public class LivreController : ControllerBase
     {
         private DAL dal;
@@ -22,6 +25,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType<Livre>(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<Livre> GetById(int id)
         {
             if (id < 0) return BadRequest("ID invalide.");
@@ -37,6 +41,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType<List<Livre>>(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<Livre>> GetByAuteur(int auteurId)
         {
             if (auteurId < 0 || dal.AuteurFactory.Get(auteurId) is null) return BadRequest("ID invalide.");
@@ -61,6 +66,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType<List<Livre>>(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<Livre>> GetByCat(int categoryId)
         {
             if (categoryId < 0 || dal.CategoryFactory.Get(categoryId) is null) return BadRequest("ID invalide.");
@@ -86,6 +92,7 @@ namespace projet.Controllers
         [HttpGet("/dispo")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType<List<Livre>>(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<Livre>> GetDispo()
         {
             Livre[] livres = dal.LivreFactory.GetDispo();
@@ -100,6 +107,7 @@ namespace projet.Controllers
         [HttpGet("/indispo")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType<List<Livre>>(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<Livre>> GetInDispo()
         {
             Livre[] livres = dal.LivreFactory.GetDispo(false);
@@ -114,6 +122,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType<List<Livre>>(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<Livre>> GetInDispoMembId(int membreId)
         {
             if (membreId < 0) return BadRequest("ID invalide.");
@@ -130,6 +139,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType<List<Livre>>(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public ActionResult<List<Livre>> GetHistEmprunt(int membreId)
         {
             if (membreId < 0) return BadRequest("ID invalide.");
@@ -146,6 +156,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [CustomAuthorize(Roles.Admin)]
         public IActionResult Post([FromBody] Livre livre)
         {
             if (livre is null) return StatusCode(StatusCodes.Status412PreconditionFailed, "Livre invalide.");
@@ -169,6 +180,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [CustomAuthorize(Roles.Editor)]
         public IActionResult Put(int id, [FromBody] Livre livre)
         {
             if (id < 0 || livre is null) return StatusCode(StatusCodes.Status412PreconditionFailed);
@@ -193,6 +205,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [CustomAuthorize(Roles.Admin)]
         public IActionResult Delete(int id)
         {
             if (dal.LivreFactory.Get(id) is null) return NotFound("Ce livre n'existe pas.");
