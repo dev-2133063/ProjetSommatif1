@@ -5,7 +5,7 @@ using ProjetISDP1.DataAccessLayer;
 
 namespace projet.Security.Authorization
 {
-    public class CustomAuthorizeAttribute : Attribute, IAuthorizationFilters
+    public class CustomAuthorizeAttribute : Attribute, IAuthorizationFilter
     {
         private List<string> _roles;
 

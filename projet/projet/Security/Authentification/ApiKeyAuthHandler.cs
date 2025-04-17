@@ -40,7 +40,9 @@ namespace projet.Security.Authentification
                 return;
             }
 
-            if (!new QuotaProcessor().LogQuota(apikey))
+            QuotaProcessor qp = new QuotaProcessor();
+
+            if (!qp.LogQuota(apikey))
             {
                 var errorResponse = new
                 {

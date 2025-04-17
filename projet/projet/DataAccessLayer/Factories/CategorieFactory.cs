@@ -8,7 +8,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         private Categorie CreateFromReader(MySqlDataReader mySqlDataReader)
         {
             int id = (int)mySqlDataReader["Id"];
-            string nom = mySqlDataReader["Nom"].ToString();
+            string nom = mySqlDataReader["Nom"].ToString() ?? string.Empty;
 
             return new Categorie(id, nom);
         }
@@ -21,8 +21,8 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         public Categorie[] GetAll()
         {
             List<Categorie> categories = new List<Categorie>();
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -47,11 +47,11 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             return categories.ToArray();
         }
 
-        public Categorie Get(int id)
+        public Categorie? Get(int id)
         {
-            Categorie categorie = null;
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            Categorie? categorie = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -79,7 +79,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
 
         public void Save(Categorie categorie)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {
@@ -121,7 +121,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
 
         public void Delete(int id)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {

@@ -74,7 +74,7 @@ namespace projet.Controllers
 
 
         // PUT: api/<AuteurController>/5
-        [HttpPost("{id}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType<Auteur>(StatusCodes.Status200OK)]
         [CustomAuthorize(Roles.Admin)]

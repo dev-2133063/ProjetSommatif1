@@ -8,11 +8,11 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         private Membre CreateFromReader(MySqlDataReader mySqlDataReader)
         {
             int id = (int)mySqlDataReader["Id"];
-            string nom = mySqlDataReader["Nom"].ToString();
-            string courriel = mySqlDataReader["Courriel"].ToString();
-            string telephone = mySqlDataReader["Telephone"].ToString();
+            string nom = mySqlDataReader["Nom"].ToString() ?? string.Empty;
+            string courriel = mySqlDataReader["Courriel"].ToString() ?? string.Empty;
+            string telephone = mySqlDataReader["Telephone"].ToString() ?? string.Empty;
             DateTime dateCreation = (DateTime)mySqlDataReader["DateCreation"];
-            string apiKey = mySqlDataReader["ApiKey"].ToString();
+            string apiKey = mySqlDataReader["ApiKey"].ToString() ?? string.Empty;
 
             return new Membre(id, nom, courriel, telephone, dateCreation, apiKey);
         }
@@ -24,8 +24,8 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         public Membre[] GetAll()
         {
             List<Membre> membres = new List<Membre>();
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -50,11 +50,11 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             return membres.ToArray();
         }
 
-        public Membre Get(int id)
+        public Membre? Get(int id)
         {
-            Membre membre = null;
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            Membre? membre = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -80,11 +80,11 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             return membre;
         }
 
-        public Membre GetViaKey(string apikey)
+        public Membre? GetViaKey(string apikey)
         {
-            Membre membre = null;
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            Membre? membre = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -112,7 +112,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
 
         public void Save(Membre membre)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {
@@ -171,7 +171,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
 
         public void Delete(int id)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {

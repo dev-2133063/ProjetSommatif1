@@ -28,8 +28,8 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         public Emprunt[] GetAll()
         {
             List<Emprunt> emprunts = new List<Emprunt>();
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -54,11 +54,11 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             return emprunts.ToArray();
         }
 
-        public Emprunt Get(int id)
+        public Emprunt? Get(int id)
         {
-            Emprunt emprunt = null;
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            Emprunt? emprunt = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -86,7 +86,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
 
         public void Save(Emprunt emprunt)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {

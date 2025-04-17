@@ -10,16 +10,17 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             DAL dal = new DAL();
 
             int id = (int)mySqlDataReader["Id"];
-            string isbn = mySqlDataReader["ISBN"].ToString();
-            string titre = mySqlDataReader["Titre"].ToString();
+            string isbn = mySqlDataReader["ISBN"].ToString() ?? string.Empty;
+            string titre = mySqlDataReader["Titre"].ToString() ?? string.Empty;
             int nbPages = (int)mySqlDataReader["NbPages"];
             int auteurId = (int)mySqlDataReader["AuteurId"];
             int categorieId = (int)mySqlDataReader["CategorieId"];
 
             Livre livre = new Livre(id, isbn, titre, nbPages, auteurId, categorieId);
 
-            livre.Auteur = dal.AuteurFactory.Get(auteurId);
-            livre.Categorie = dal.CategoryFactory.Get(categorieId);
+            //amélioration interne
+            //livre.Auteur = dal.AuteurFactory.Get(auteurId);
+            //livre.Categorie = dal.CategoryFactory.Get(categorieId);
 
             return livre;
         }
@@ -31,6 +32,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
 
         public Livre[] GetAll()
         {
+            DAL dal = new DAL();
             List<Livre> livres = new List<Livre>();
             MySqlConnection mySqlCnn = null;
             MySqlDataReader mySqlDataReader = null;
@@ -43,10 +45,27 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
                 mySqlCmd.CommandText = "SELECT * FROM projet_livre";
 
+                //Toutes les categories
+                Dictionary<int, Categorie> catDictionnary = new Dictionary<int, Categorie>();
+                Categorie[] cats = dal.CategoryFactory.GetAll();
+                foreach (Categorie cat in cats)
+                    catDictionnary.Add(cat.Id, cat);
+
+                //toutes les auteurs
+                Dictionary<int, Auteur> autDictionnary = new Dictionary<int, Auteur>();
+                Auteur[] auts = dal.AuteurFactory.GetAll();
+                foreach (Auteur aut in auts)
+                    autDictionnary.Add(aut.Id, aut);
+
                 mySqlDataReader = mySqlCmd.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
-                    livres.Add(CreateFromReader(mySqlDataReader));
+                    Livre livre = CreateFromReader(mySqlDataReader);
+
+                    livre.Categorie = catDictionnary[livre.CategorieId];
+                    livre.Auteur = autDictionnary[livre.AuteurId];
+
+                    livres.Add(livre);
                 }
             }
             finally
@@ -58,11 +77,11 @@ namespace ProjetISDP1.DataAccessLayer.Factories
             return livres.ToArray();
         }
         
-        public Livre Get(int id)
+        public Livre? Get(int id)
         {
-            Livre livre = null;
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            Livre? livre = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -98,8 +117,8 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         public Livre[] GetDispo(bool disponibilite = true)
         {
             List<Livre> livres = new List<Livre>();
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -135,8 +154,8 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         public Livre[] GetInDispoMembre(int id)
         {
             List<Livre> livres = new List<Livre>();
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -174,8 +193,8 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         public Livre[] GetAllDejaEmprunte(int membreId = -1)
         {
             List<Livre> livres = new List<Livre>();
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -214,7 +233,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         }
         public void Save(Livre livre)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {
@@ -267,7 +286,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
 
         public void Delete(int id)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {

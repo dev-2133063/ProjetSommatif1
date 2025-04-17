@@ -10,8 +10,8 @@ namespace projet.DataAccessLayer.Factories
     {
         public List<string> GetRolesFromApiKey(string key)
         {
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
             List<string> roles = new List<string>();
 
             try
@@ -44,7 +44,9 @@ namespace projet.DataAccessLayer.Factories
 
             while (mySqlDataReader.Read())
             {
-                roles.Add(mySqlDataReader["Role"].ToString());
+                string? role = mySqlDataReader["Role"].ToString() ?? string.Empty;
+
+                if (role != null && role != "") roles.Add(role);
             }
             return roles;
         }

@@ -176,7 +176,7 @@ namespace projet.Controllers
         }
 
         // PUT: api/<LivreController>/5
-        [HttpPost("{id}")]
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]

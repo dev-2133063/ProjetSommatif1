@@ -8,7 +8,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         private Auteur CreateFromReader(MySqlDataReader mySqlDataReader)
         {
             int id = (int)mySqlDataReader["Id"];
-            string nom = mySqlDataReader["Nom"].ToString();
+            string nom = mySqlDataReader["Nom"].ToString() ?? string.Empty;
 
             return new Auteur(id, nom);
         }
@@ -21,8 +21,8 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         public Auteur[] GetAll()
         {
             List<Auteur> auteurs = new List<Auteur>();
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -46,11 +46,11 @@ namespace ProjetISDP1.DataAccessLayer.Factories
 
             return auteurs.ToArray();
         }
-        public Auteur Get(int id)
+        public Auteur? Get(int id)
         {
-            Auteur auteur = null;
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            Auteur? auteur = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -78,7 +78,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         
         public void Save(Auteur auteur)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {
@@ -125,7 +125,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
         }
         public void Delete(int id)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {

@@ -27,8 +27,8 @@ namespace projet.DataAccessLayer.Factories
 
         public void Reset(QuotaApi quotaApi)
         {
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {
@@ -51,7 +51,7 @@ namespace projet.DataAccessLayer.Factories
 
         public void Log(QuotaApi quota)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {
@@ -88,7 +88,7 @@ namespace projet.DataAccessLayer.Factories
 
         public void New(QuotaApi quota)
         {
-            MySqlConnection mySqlCnn = null;
+            MySqlConnection? mySqlCnn = null;
 
             try
             {
@@ -120,11 +120,11 @@ namespace projet.DataAccessLayer.Factories
                 }
             }
         }
-        public QuotaApi GetQuotaViaKey(string apikey)
+        public QuotaApi? GetQuotaViaKey(string apikey)
         {
-            QuotaApi quota = null;
-            MySqlConnection mySqlCnn = null;
-            MySqlDataReader mySqlDataReader = null;
+            QuotaApi? quota = null;
+            MySqlConnection? mySqlCnn = null;
+            MySqlDataReader? mySqlDataReader = null;
 
             try
             {

@@ -5,13 +5,13 @@ namespace ProjetISDP1.DataAccessLayer
 {
     public class DAL
     {
-        private AuteurFactory _auteurFactory = null;
-        private LivreFactory _livreFactory = null;
-        private CategorieFactory _categorieFactory = null;
-        private EmpruntFactory _empruntFactory = null;
-        private MembreFactory _membreFactory = null;
-        private QuotaApiFactory _quotaApiFactory = null;
-        private RolesFactory _rolesFactory = null;
+        private AuteurFactory? _auteurFactory = null;
+        private LivreFactory? _livreFactory = null;
+        private CategorieFactory? _categorieFactory = null;
+        private EmpruntFactory? _empruntFactory = null;
+        private MembreFactory? _membreFactory = null;
+        private QuotaApiFactory? _quotaApiFactory = null;
+        private RolesFactory? _rolesFactory = null;
 
         public static string ConnectionString
         {
