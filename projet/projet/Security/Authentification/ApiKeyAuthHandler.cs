@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace projet.Security.Authentification
 {
-    public class ApiKeyAuthHandler
+    public class ApiKeyAuthHandler : Attribute, IAsyncActionFilter
     {
         private const string ApiKeyHeaderName = "x-api-key";
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            Console.WriteLine("CHECKING");
+
             if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyHeaderName, out var potentialApiKey))
             {
                 var errorResponse = new
@@ -42,6 +44,7 @@ namespace projet.Security.Authentification
 
             QuotaProcessor qp = new QuotaProcessor();
 
+            Console.WriteLine("");
             if (!qp.LogQuota(apikey))
             {
                 var errorResponse = new

@@ -157,6 +157,9 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                     {
                         // Affectation du nouvel Id si c'est un nouveau membre
                         membre.Id = (int)mySqlCmd.LastInsertedId;
+
+                        //nouveau quota
+                        new DAL().QuotaApiFactory.New(new QuotaApi(0, membre.Id, DateTime.Now, 20, 0));
                     }
                 }
             }

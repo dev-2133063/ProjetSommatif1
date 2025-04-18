@@ -42,6 +42,8 @@ namespace projet.DataAccessLayer.Factories
 
                 mySqlCmd.Parameters.AddWithValue("@MaxReq", quotaApi.MaxReq);
                 mySqlCmd.Parameters.AddWithValue("@Id", quotaApi.Id);
+
+                mySqlCmd.ExecuteNonQuery();
             }
             finally
             {
@@ -65,9 +67,6 @@ namespace projet.DataAccessLayer.Factories
                                            "WHERE Id=@Id";
 
                     mySqlCmd.Parameters.AddWithValue("@Id", quota.Id);
-                    mySqlCmd.Parameters.AddWithValue("@MembreId", quota.MembreId);
-                    mySqlCmd.Parameters.AddWithValue("@MaxRequetes", quota.MaxReq);
-                    mySqlCmd.Parameters.AddWithValue("@RequetesUtilisees", quota.RequetesUtilisees + 1);
 
                     mySqlCmd.ExecuteNonQuery();
 

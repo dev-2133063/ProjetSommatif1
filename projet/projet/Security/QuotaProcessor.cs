@@ -15,7 +15,7 @@ namespace projet.Security
         }
         public bool LogQuota(string apikey)
         {
-            QuotaApi quota = dal.QuotaApiFactory.GetQuotaViaKey(apikey);
+            QuotaApi? quota = dal.QuotaApiFactory.GetQuotaViaKey(apikey);
 
             if (quota is null)
             {
