@@ -9,8 +9,6 @@ namespace projet.DataAccessLayer.Factories
     {
         private QuotaApi CreateFromReader(MySqlDataReader mySqlDataReader)
         {
-            DAL dal = new DAL();
-
             int id = (int)mySqlDataReader["Id"];
             int membreId = (int)mySqlDataReader["MembreId"];
             DateTime dateTime = (DateTime)mySqlDataReader["DateMAJ"];
@@ -42,6 +40,8 @@ namespace projet.DataAccessLayer.Factories
 
                 mySqlCmd.Parameters.AddWithValue("@MaxReq", quotaApi.MaxReq);
                 mySqlCmd.Parameters.AddWithValue("@Id", quotaApi.Id);
+
+                mySqlCmd.ExecuteNonQuery();
             }
             finally
             {
@@ -65,9 +65,6 @@ namespace projet.DataAccessLayer.Factories
                                            "WHERE Id=@Id";
 
                     mySqlCmd.Parameters.AddWithValue("@Id", quota.Id);
-                    mySqlCmd.Parameters.AddWithValue("@MembreId", quota.MembreId);
-                    mySqlCmd.Parameters.AddWithValue("@MaxRequetes", quota.MaxReq);
-                    mySqlCmd.Parameters.AddWithValue("@RequetesUtilisees", quota.RequetesUtilisees + 1);
 
                     mySqlCmd.ExecuteNonQuery();
 
@@ -132,10 +129,10 @@ namespace projet.DataAccessLayer.Factories
                 mySqlCnn.Open();
 
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
-                mySqlCmd.CommandText = "SELECT * " +
-                                       "FROM projet_quota_api pq " +
-                                       "JOIN projet_membre pm ON pq.MembreId = pm.Id " +
-                                       "WHERE pm.Apikey = @Apikey";
+                mySqlCmd.CommandText = "SELECT pq.* " +
+                                       "FROM `projet_quota_api` pq " +
+                                       "JOIN `projet_membre` pm ON pq.MembreId = pm.Id " +
+                                       "WHERE pm.Apikey = @Apikey;";
 
                 mySqlCmd.Parameters.AddWithValue("@Apikey", apikey);
 

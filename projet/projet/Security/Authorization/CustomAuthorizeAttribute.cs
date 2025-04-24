@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using ProjetISDP1.DataAccessLayer;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 namespace projet.Security.Authorization
 {
@@ -26,7 +27,7 @@ namespace projet.Security.Authorization
 
             _roles = apiKeyAttribute._roles;
 
-            string apiKey = context.HttpContext.Request.Headers["X-API-Key"].FirstOrDefault();
+            string? apiKey = context.HttpContext.Request.Headers["X-API-Key"].FirstOrDefault();
 
             if (string.IsNullOrWhiteSpace(apiKey))
             {
