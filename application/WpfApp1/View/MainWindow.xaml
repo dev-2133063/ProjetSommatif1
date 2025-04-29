@@ -9,7 +9,7 @@
     <Grid Margin="3">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="2">
@@ -27,8 +27,8 @@
 
             <TextBlock x:Name="textBlockNotifs" FontSize="14">Zone de notifications</TextBlock>
 
-            <ComboBox x:Name="comboBoxLangue" 
-                      Grid.Column="3">
+            <ComboBox x:Name="comboBoxLangue" Grid.Column="3"
+                      FontSize="15" VerticalAlignment="Center">
                 <ComboBoxItem Content="Français" IsSelected="True"/>
                 <ComboBoxItem Content="English"/>
             </ComboBox>

@@ -43,7 +43,7 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                 mySqlCnn.Open();
 
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
-                mySqlCmd.CommandText = "SELECT * FROM projet_livre";
+                mySqlCmd.CommandText = "SELECT * FROM projet_livre ORDER BY ISBN ASC";
 
                 //Toutes les categories
                 Dictionary<int, Categorie> catDictionnary = new Dictionary<int, Categorie>();

@@ -1,5 +1,6 @@
 ﻿using projet.DataAccessLayer.Factories;
 using ProjetISDP1.DataAccessLayer.Factories;
+using ProjetISDP2.DataAccessLayer.Factories;
 
 namespace ProjetISDP1.DataAccessLayer
 {
@@ -12,6 +13,7 @@ namespace ProjetISDP1.DataAccessLayer
         private MembreFactory? _membreFactory = null;
         private QuotaApiFactory? _quotaApiFactory = null;
         private RolesFactory? _rolesFactory = null;
+        private LoginFactory? _loginFactory = null;
 
         public static string ConnectionString
         {
@@ -96,6 +98,17 @@ namespace ProjetISDP1.DataAccessLayer
                     _rolesFactory = new RolesFactory();
                 }
                 return _rolesFactory;
+            }
+        }
+        public LoginFactory LoginFactory
+        {
+            get
+            {
+                if (_loginFactory == null)
+                {
+                    _loginFactory = new LoginFactory();
+                }
+                return _loginFactory;
             }
         }
     }

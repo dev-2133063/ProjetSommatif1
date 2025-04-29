@@ -24,15 +24,13 @@
         <!-- label -->
         <Label x:Name="labelNomUtilisateur"
                Grid.Column="1" Grid.Row="1"
-               FontSize="16" VerticalAlignment="Center">
-            Nom d'utilisateur :</Label>
+               FontSize="16" VerticalAlignment="Center"></Label>
         <Label x:Name="labelMotDePasse"
                Grid.Column="1" Grid.Row="2"
-               FontSize="16" VerticalAlignment="Center">
-            Mot de passe :</Label>
+               FontSize="16" VerticalAlignment="Center"></Label>
 
         <!-- input -->
-        <TextBox x:Name="inputNomUtilisateur" Margin="0 5"
+        <TextBox x:Name="inputNomUtilisateur" Margin="0"
                  Grid.Column="2" Grid.Row="1"
                  FontSize="15" VerticalAlignment="Center">
         </TextBox>
@@ -45,8 +43,7 @@
         <Button x:Name="btnConnecter" Grid.ColumnSpan="2"
                 Grid.Column="1" Grid.Row="3"
                 Width="200" Height="60"
-                FontSize="20">
-            Se connecter</Button>
+                FontSize="20"></Button>
 
     </Grid>
 </UserControl>
