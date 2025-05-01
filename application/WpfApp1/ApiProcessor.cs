@@ -7,22 +7,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using WpfApp1.Model;
+using System.Net.Http.Json;
+using WpfApp1.Model.ApiModels;
+using System.Windows.Shapes;
+using WpfApp1.View;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace WpfApp1
 {
     public class ApiProcessor
     {
-        public static async Task<IAsyncResult>? Login(string username, string password)
+        public static async Task<string>? Login(string username, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) return null;
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password)) return "";
 
-            string url = $"/Login/{username}/{password}";
+            string url = $"Login/{username}/{password}";
             using (Task<HttpResponseMessage> response = ApiHelper.ApiClient.GetAsync(url))
             {
                 if (response.Result.IsSuccessStatusCode)
                 {
-                    Task<IAsyncResult> result = response.Result.Content.ReadAsAsync<IAsyncResult>();
-                    return result;
+                    Task<string> result = response.Result.Content.ReadAsStringAsync();
+                    return await result;
                 }
                 else
                 {
@@ -36,13 +42,16 @@ namespace WpfApp1
             //todo
             if (livre is null || livre.Id <= 0) return null;
 
-            string url = $"/api/Livre/{livre.Id}";
-            using (Task<HttpResponseMessage> response = ApiHelper.ApiClient.GetAsync(url))
+            string url = $"api/Livre/{livre.Id}"; 
+            string json = JsonSerializer.Serialize(livre);
+            HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using (Task<HttpResponseMessage> response = ApiHelper.ApiClient.PutAsync(url, content))
             {
                 if (response.Result.IsSuccessStatusCode)
                 {
-                    Task<IAsyncResult> result = response.Result.Content.ReadAsAsync<IAsyncResult>();
-                    return result;
+                    Task<IAsyncResult> result = response.Result.Content.ReadFromJsonAsync<IAsyncResult>();
+                    return await result;
                 }
                 else
                 {
@@ -50,5 +59,65 @@ namespace WpfApp1
                 }
             }
         }
+
+        public static async Task<List<LivreAPI>> GetAllLivres()
+        {
+            string url = $"api/Livre";
+            using (Task<HttpResponseMessage> response = ApiHelper.ApiClient.GetAsync(url))
+            {
+                if (response.Result.IsSuccessStatusCode)
+                {
+                    Task<List<LivreAPI>> results = response.Result.Content.ReadFromJsonAsync<List<LivreAPI>>();
+                    return await results;
+                }
+                else
+                {
+                    throw new Exception(response.Result.ReasonPhrase);
+                }
+            }
+        }
+
+        public static async Task<List<AuteurAPI>> GetAllAuteurs()
+        {
+            string url = $"api/Auteur";
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    Task<List<AuteurAPI>> results = response.Content.ReadFromJsonAsync<List<AuteurAPI>>();
+                    return await results;
+                }
+                else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+            }
+        }
+
+        public static async Task<List<Livre>> ConvertLivres(List<LivreAPI> livresAPI)
+        {
+            List<Livre> newLivres = new List<Livre>();
+
+            foreach (LivreAPI livre in livresAPI)
+            {
+                newLivres.Add(new Livre(livre));
+            }
+
+            return newLivres;
+        }
+
+        public static async Task<List<Auteur>> ConvertAuteurs(List<AuteurAPI> auteursAPI)
+        {
+            List<Auteur> newAuteurs = new List<Auteur>();
+
+            foreach (AuteurAPI auteur in auteursAPI)
+            {
+                newAuteurs.Add(new Auteur(auteur));
+            }
+
+            return newAuteurs;
+        }
+
+
     }
 }

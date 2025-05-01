@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using WpfApp1.Ressources;
 
 namespace WpfApp1.ViewModel
 {
@@ -19,20 +21,37 @@ namespace WpfApp1.ViewModel
         }
 
         [RelayCommand]
-        public void Login()
+        public async void Login()
         {
+            string? apikey;
+
             if (string.IsNullOrEmpty(Username.Trim()) || string.IsNullOrEmpty(Password.Trim()))
             {
-                Message = Ressources.Ressources.messageLoginInvalide
+                //todo bon message
+                //Message = Ressources.Ressources.messageRemplirChamps;
                 return;
             }
 
-            //todo
-            //string result = await ApiProcessor.Login(Username, Password);
-            //if (result == OKAY)
-            ResetValues();
+            try
+            {
+                apikey = await ApiProcessor.Login(Username, Password);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
-            //else Message = "Mot de passe ou nom d'utilisateur incorrecte.";
+            if (apikey != null /*|| result.Status = Satus.Ok*/)
+            {
+                ConfigurationManager.AppSettings["apikey"] = apikey;
+
+                ResetValues();
+            }
+            else
+            {
+                //Message = Ressources.Ressources.MessageLoginInvalide;
+            }
+
 
         }
 

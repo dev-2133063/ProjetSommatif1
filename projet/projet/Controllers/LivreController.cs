@@ -20,6 +20,20 @@ namespace projet.Controllers
             dal = new DAL();
         }
 
+        // GET: api/<LivreController>
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType<Livre>(StatusCodes.Status200OK)]
+        [AllowAnonymous]
+        public ActionResult<List<Livre>> GetAll()
+        {
+            List<Livre> livres = dal.LivreFactory.GetAll().ToList();
+
+            if (!livres.Any()) return NotFound("Aucun livre trouvé");
+
+            return Ok(livres);
+        }
+
         // GET: api/<LivreController>/2
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

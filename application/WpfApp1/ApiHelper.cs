@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace WpfApp1
 {
@@ -15,12 +16,12 @@ namespace WpfApp1
         {
             //initialisation du httpClient
             ApiClient = new HttpClient();
-            ApiClient.BaseAddress = new Uri("https://localhost:7088");
+            ApiClient.BaseAddress = new Uri("https://localhost:7088/");
 
             //Sert à préciser le wanted return type
             ApiClient.DefaultRequestHeaders.Accept.Clear();
 
-            //ApiClient.DefaultRequestHeaders.Add("apikey", apikey);
+            ApiClient.DefaultRequestHeaders.Add("apikey", ConfigurationManager.AppSettings["apikey"]);
             ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
     }

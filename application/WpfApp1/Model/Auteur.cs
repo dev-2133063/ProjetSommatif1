@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp1.Model.ApiModels;
 
 namespace WpfApp1.Model
 {
@@ -10,10 +11,10 @@ namespace WpfApp1.Model
     {
         public int Id { get; set; }
         public string Nom { get; set; }
-        public Auteur(int id, string nom)
+        public Auteur(AuteurAPI auteur)
         {
-            Id = id;
-            Nom = nom;
+            Id = auteur.id;
+            Nom = auteur.nom;
         }
     }
 }

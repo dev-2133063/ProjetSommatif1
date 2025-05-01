@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace WpfApp1.Model.ApiModels
 {
-    internal class LivreAPI
+    public class LivreAPI
     {
         //Results
         [JsonProperty(PropertyName = "id")]
@@ -26,12 +26,9 @@ namespace WpfApp1.Model.ApiModels
         public int auteurId { get; set; }
 
         [JsonProperty(PropertyName = "categorieId")]
-        public int categoruieId { get; set; }
+        public int categorieId { get; set; }
 
         [JsonProperty(PropertyName = "date")]
-        public AuteurAPI? auteur { get; set; }
-
-        [JsonProperty(PropertyName = "categorie")]
-        public Categorie? categorie{ get; set; }
+        public AuteurAPI auteur { get; set; }
     }
 }

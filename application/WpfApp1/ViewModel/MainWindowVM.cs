@@ -9,5 +9,6 @@ namespace WpfApp1.ViewModel
 {
     internal class MainWindowVM
     {
+
     }
 }

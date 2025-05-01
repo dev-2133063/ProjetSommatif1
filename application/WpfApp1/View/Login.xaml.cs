@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.ViewModel;
 
 namespace WpfApp1.View
 {
@@ -22,7 +23,12 @@ namespace WpfApp1.View
     {
         public Login()
         {
+            this.DataContext = new LoginVM();
             InitializeComponent();
+        }
+
+        private void btnConnecter_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

@@ -33,7 +33,7 @@ namespace WpfApp1.ViewModel
 
         public ModLivreVM()
         {
-
+            GetAllInformation();
         }
 
 
@@ -81,7 +81,11 @@ namespace WpfApp1.ViewModel
             }
         }
 
-
+        private async void GetAllInformation()
+        {
+            Livres = new ObservableCollection<Livre>(await ApiProcessor.ConvertLivres(await ApiProcessor.GetAllLivres()));
+            Auteurs = new ObservableCollection<Auteur>(await ApiProcessor.ConvertAuteurs(await ApiProcessor.GetAllAuteurs()));
+        }
 
     }
 }

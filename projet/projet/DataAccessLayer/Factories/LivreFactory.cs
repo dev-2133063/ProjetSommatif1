@@ -49,21 +49,32 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                 Dictionary<int, Categorie> catDictionnary = new Dictionary<int, Categorie>();
                 Categorie[] cats = dal.CategoryFactory.GetAll();
                 foreach (Categorie cat in cats)
+                {
+                    if (cat.Id > 0)
                     catDictionnary.Add(cat.Id, cat);
+                }
 
                 //toutes les auteurs
                 Dictionary<int, Auteur> autDictionnary = new Dictionary<int, Auteur>();
                 Auteur[] auts = dal.AuteurFactory.GetAll();
                 foreach (Auteur aut in auts)
+                {
+                    if (aut.Id > 0)
                     autDictionnary.Add(aut.Id, aut);
+                }
 
                 mySqlDataReader = mySqlCmd.ExecuteReader();
                 while (mySqlDataReader.Read())
                 {
                     Livre livre = CreateFromReader(mySqlDataReader);
 
-                    livre.Categorie = catDictionnary[livre.CategorieId];
-                    livre.Auteur = autDictionnary[livre.AuteurId];
+                    if (catDictionnary.TryGetValue(livre.CategorieId, out Categorie cat))
+                        livre.Categorie = cat;
+                    else livre.Categorie = null;
+
+                    if (autDictionnary.TryGetValue(livre.AuteurId, out Auteur aut))
+                        livre.Auteur = aut;
+                    else livre.Auteur = null;
 
                     livres.Add(livre);
                 }

@@ -22,6 +22,7 @@ namespace WpfApp1.View
     {
         public MainWindow()
         {
+            ApiHelper.InitializeClient();
             this.DataContext = new MainWindowVM();
             InitializeComponent();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp1.Model.ApiModels;
 
 namespace WpfApp1.Model
 {
@@ -15,15 +16,14 @@ namespace WpfApp1.Model
         public int AuteurId { get; set; }
         public int CategorieId { get; set; }
         public Auteur Auteur { get; set; }
-        public Categorie Categorie { get; set; }
-        public Livre(int id, string isbn, string titre, int nbPages, int auteurId, int categorieId)
+        public Livre(LivreAPI livre)
         {
-            Id = id;
-            Isbn = isbn;
-            Titre = titre;
-            NbPages = nbPages;
-            AuteurId = auteurId;
-            CategorieId = categorieId;
+            Id = livre.id;
+            Isbn = livre.isbn;
+            Titre = livre.titre;
+            NbPages = livre.nbPages;
+            AuteurId = livre.auteurId;
+            CategorieId = livre.categorieId;
         }
 
     }

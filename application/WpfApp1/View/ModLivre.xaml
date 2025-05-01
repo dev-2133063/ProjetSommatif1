@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WpfApp1.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
-    <Grid Margin="3">
+    <Grid x:Name="modLivre" Margin="3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.3*"/>
             <ColumnDefinition Width="3*"/>

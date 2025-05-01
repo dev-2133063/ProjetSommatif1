@@ -13,7 +13,8 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="2">
-            <!-- Views -->
+            <local:Login Visibility="Visible"></local:Login>
+            <local:ModLivre Visibility="Collapsed"></local:ModLivre>
         </Grid>
 
         <!-- bas de l'écran -->
