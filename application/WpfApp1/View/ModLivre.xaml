@@ -16,8 +16,8 @@
             <ListView ItemsSource="{Binding Livres}" SelectedItem="{Binding LivreSelectionne}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn x:Name="listCol_livreIsbn" Width="auto" DisplayMemberBinding="{Binding Livre.Isbn}"/>
-                        <GridViewColumn x:Name="listCol_livreTitre" Width="auto" DisplayMemberBinding="{Binding Livre.Titre}"/>
+                        <GridViewColumn x:Name="listCol_livreIsbn" Width="auto" DisplayMemberBinding="{Binding Isbn}"/>
+                        <GridViewColumn x:Name="listCol_livreTitre" Width="auto" DisplayMemberBinding="{Binding Titre}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -53,30 +53,30 @@
 
                 <!--  -->
                 <TextBox x:Name="inputIsbn" Grid.Column="1" Grid.Row="0"
-                         FontSize="15" VerticalAlignment="Center"
-                         HorizontalAlignment="Center" MaxLength="15"
+                         FontSize="15" VerticalAlignment="Center" Width="200"
+                         HorizontalAlignment="Left" MaxLength="15"
                          Text="{Binding Isbn}"></TextBox>
-                <TextBox x:Name="inputTitre" Grid.Column="1" Grid.Row="0"
-                         FontSize="15" VerticalAlignment="Center"
-                         HorizontalAlignment="Center" MaxLength="70"
+                <TextBox x:Name="inputTitre" Grid.Column="1" Grid.Row="1"
+                         FontSize="15" VerticalAlignment="Center" Width="200"
+                         HorizontalAlignment="Left" MaxLength="70"
                          Text="{Binding Titre}"></TextBox>
-                <TextBox x:Name="inputNbPages" Grid.Column="1" Grid.Row="0"
-                         FontSize="15" VerticalAlignment="Center"
-                         HorizontalAlignment="Center"
+                <TextBox x:Name="inputNbPages" Grid.Column="1" Grid.Row="2"
+                         FontSize="15" VerticalAlignment="Center" Width="200"
+                         HorizontalAlignment="Left"
                          Text="{Binding NbPages}"></TextBox>
 
                 <ListView ItemsSource="{Binding Auteurs}" SelectedItem="{Binding AuteurSelectionne}"
                           Grid.Column="1" Grid.Row="3">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn x:Name="listColNom" Width="auto" DisplayMemberBinding="{Binding Auteur.Nom}"/>
+                            <GridViewColumn x:Name="listColNom" Width="auto" DisplayMemberBinding="{Binding Nom}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
 
                 <Button x:Name="btnEnregistrer" Grid.Column="1" Grid.Row="4"
                         Margin="5" Height="40" VerticalAlignment="Bottom"
-                        Command="{Binding EnregristrerMod}">
+                        Command="{Binding EnregistrerModCommand}">
                 </Button>
 
 

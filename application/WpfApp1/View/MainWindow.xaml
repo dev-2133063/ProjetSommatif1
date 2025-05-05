@@ -13,29 +13,31 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="2">
-            <local:Login Visibility="Visible"></local:Login>
-            <local:ModLivre Visibility="Collapsed"></local:ModLivre>
+            <local:Login Visibility="Visible" x:Name="loginV"></local:Login>
+            <local:ModLivre Visibility="Collapsed" x:Name="modLivreV"></local:ModLivre>
         </Grid>
 
         <!-- bas de l'écran -->
-        <Grid Grid.Row="1" Margin="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2.5*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="175"/>
-                <ColumnDefinition Width="150"/>
-            </Grid.ColumnDefinitions>
+        <Border Grid.Row="1" BorderThickness="0 1 0 0" BorderBrush="Black">
+            <Grid Margin="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="175"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="textBlockNotifs" FontSize="14">Zone de notifications</TextBlock>
+                <TextBlock x:Name="textBlockNotifs" FontSize="14">Zone de notifications</TextBlock>
 
-            <ComboBox x:Name="comboBoxLangue" Grid.Column="3"
-                      FontSize="15" VerticalAlignment="Center">
-                <ComboBoxItem Content="Français" IsSelected="True"/>
-                <ComboBoxItem Content="English"/>
-            </ComboBox>
+                <ComboBox x:Name="comboBoxLangue" Grid.Column="3" SelectionChanged="comboBoxLangue_SelectionChanged"
+                          FontSize="15" VerticalAlignment="Center">
+                    <ComboBoxItem Content="Français" Tag="fr" IsSelected="True"/>
+                    <ComboBoxItem Content="English" Tag="en"/>
+                </ComboBox>
 
-            <TextBlock x:Name="textBlockTheme" 
-                       Grid.Column="2" FontSize="14">Theme</TextBlock>
-        </Grid>
+                <TextBlock x:Name="textBlockTheme" 
+                           Grid.Column="2" FontSize="14">Theme</TextBlock>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

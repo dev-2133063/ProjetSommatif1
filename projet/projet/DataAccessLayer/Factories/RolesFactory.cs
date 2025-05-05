@@ -10,6 +10,7 @@ namespace projet.DataAccessLayer.Factories
     {
         public List<string> GetRolesFromApiKey(string key)
         {
+
             MySqlConnection? mySqlCnn = null;
             MySqlDataReader? mySqlDataReader = null;
             List<string> roles = new List<string>();
@@ -20,12 +21,9 @@ namespace projet.DataAccessLayer.Factories
                 mySqlCnn.Open();
 
                 MySqlCommand mySqlCmd = mySqlCnn.CreateCommand();
-                mySqlCmd.CommandText = @"SELECT pmr.Role 
-                                        FROM projet_membre_roles pmr
-                                        JOIN projet_membre pm ON pmr.MembreId = pm.Id
-                                        WHERE pm.Apikey = @Apikey";
+                mySqlCmd.CommandText = @"SELECT pmr.Role FROM projet_membre_roles pmr JOIN projet_membre pm ON pmr.MembreId = pm.Id WHERE pm.Apikey = @Apikey";
 
-                mySqlCmd.Parameters.AddWithValue("@Apikey", key);
+                mySqlCmd.Parameters.AddWithValue("@Apikey", key.Trim().ToLower());
                 mySqlDataReader = mySqlCmd.ExecuteReader();
                 roles = CreateFromRead(mySqlDataReader);
             }

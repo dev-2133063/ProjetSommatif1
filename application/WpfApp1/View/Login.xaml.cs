@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,12 +24,20 @@ namespace WpfApp1.View
     {
         public Login()
         {
-            this.DataContext = new LoginVM();
             InitializeComponent();
+            UpdateUI();
         }
 
         private void btnConnecter_Click(object sender, RoutedEventArgs e)
         {
+            //todo connect and send to mod page
+        }
+
+        public void UpdateUI()
+        {
+            labelNomUtilisateur.Content = Ressources.Ressources.labelNomUtilisateur;
+            labelMotDePasse.Content = Ressources.Ressources.labelMotDePasse;
+            btnConnecter.Content = Ressources.Ressources.btnConnecter;
         }
     }
 }

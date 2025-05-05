@@ -194,7 +194,7 @@ namespace projet.Controllers
         [ProducesResponseType(StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [CustomAuthorize(Roles.Editor)]
+        [CustomAuthorize(Roles.Editor, Roles.Admin)]
         public IActionResult Put(int id, [FromBody] Livre livre)
         {
             if (id < 0 || livre is null) return StatusCode(StatusCodes.Status412PreconditionFailed);

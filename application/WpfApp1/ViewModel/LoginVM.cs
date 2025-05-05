@@ -12,6 +12,8 @@ namespace WpfApp1.ViewModel
 {
     public partial class LoginVM : ObservableObject
     {
+        public event Action<string>? OnNotify;
+        public event Action? OnLoginSuccess;
         [ObservableProperty]
         private string _username, _password, _message;
 
@@ -21,14 +23,13 @@ namespace WpfApp1.ViewModel
         }
 
         [RelayCommand]
-        public async void Login()
+        public async void LoginAsync()
         {
             string? apikey;
 
-            if (string.IsNullOrEmpty(Username.Trim()) || string.IsNullOrEmpty(Password.Trim()))
+            if (Username == null || Username == "" || Password == null || Password == "")
             {
-                //todo bon message
-                //Message = Ressources.Ressources.messageRemplirChamps;
+                OnNotify?.Invoke(Ressources.Ressources.erreur_champsVides);
                 return;
             }
 
@@ -38,18 +39,22 @@ namespace WpfApp1.ViewModel
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                //message Ressources
+                OnNotify?.Invoke(Ressources.Ressources.erreur_serveur);
+                return;
             }
 
-            if (apikey != null /*|| result.Status = Satus.Ok*/)
-            {
-                ConfigurationManager.AppSettings["apikey"] = apikey;
 
+            if (!string.IsNullOrEmpty(apikey))
+            {
+                ApiHelper.SetApiKeyHeader(apikey);
+
+                OnLoginSuccess?.Invoke();
                 ResetValues();
             }
             else
             {
-                //Message = Ressources.Ressources.MessageLoginInvalide;
+                OnNotify?.Invoke(Ressources.Ressources.erreur_loginFailed);
             }
 
 

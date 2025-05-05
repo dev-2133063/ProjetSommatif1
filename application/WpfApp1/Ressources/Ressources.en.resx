@@ -150,13 +150,25 @@
   <data name="listColNom" xml:space="preserve">
     <value>Name :</value>
   </data>
-  <data name="messageLoginInvalide" xml:space="preserve">
-    <value>Username or password is incorrect.</value>
-  </data>
-  <data name="messageRemplirChamps" xml:space="preserve">
-    <value>Please fill out all fields.</value>
-  </data>
   <data name="textBlockTheme" xml:space="preserve">
     <value>Dark mode</value>
+  </data>
+  <data name="listHeader_isbn" xml:space="preserve">
+    <value>ISBN</value>
+  </data>
+  <data name="listHeader_titre" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="listHeader_nom" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="erreur_champsVides" xml:space="preserve">
+    <value>ERROR : Please fill all fields.</value>
+  </data>
+  <data name="erreur_serveur" xml:space="preserve">
+    <value>ERROR : Server failed to get information.</value>
+  </data>
+  <data name="erreur_loginFailed" xml:space="preserve">
+    <value>ERROR : Login failed, username or password incorrect.</value>
   </data>
 </root>

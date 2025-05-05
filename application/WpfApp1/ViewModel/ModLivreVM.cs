@@ -14,13 +14,13 @@ namespace WpfApp1.ViewModel
     public partial class ModLivreVM: ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<Livre> _livres;
+        private ObservableCollection<Livre>? _livres;
 
         [ObservableProperty]
-        private ObservableCollection<Auteur> _auteurs;
+        private ObservableCollection<Auteur>? _auteurs;
 
         [ObservableProperty]
-        private string _isbn, _titre;
+        private string? _isbn, _titre;
 
         [ObservableProperty]
         private int _nbPages;
@@ -38,34 +38,43 @@ namespace WpfApp1.ViewModel
 
 
         [RelayCommand]
-        private async void EnregistrerMod()
+        private async Task EnregistrerMod()
         {
             //securite
-            if (LivreSelectionne == null || AuteurSelectionne == null) return;
-
-            //restrictions
-            if (string.IsNullOrEmpty(Isbn.Trim())) return;
-            if (string.IsNullOrEmpty(Titre.Trim())) return;
-            if (NbPages > 0) return;
+            if (LivreSelectionne == null || AuteurSelectionne == null)
+            {
+                //messaage
+                return;
+            }
+            if (Isbn == null || Isbn == "" || Titre == null || Titre == "")
+            {
+                //Message
+                return;
+            }
+            if (NbPages < 0)
+            {
+                //Message
+                return;
+            }
 
             //effectuer changements
             LivreSelectionne.Isbn = Isbn.Trim();
-            LivreSelectionne.Titre = Isbn.Trim();
+            LivreSelectionne.Titre = Titre.Trim();
             LivreSelectionne.NbPages = NbPages;
             LivreSelectionne.Auteur = AuteurSelectionne;
             LivreSelectionne.AuteurId = AuteurSelectionne.Id;
 
             //todo
-            //string result = await ApiProcessor.ModifierLivre(LivreSelectionne);
+            string? result = Convert.ToString(await ApiProcessor.ModifierLivre(LivreSelectionne));
             //if (result == WORKED) reset
             LivreSelectionne = null;
 
             //else dont reset
         }
 
-        partial void OnLivreSelectionneChanged(Livre? livre)
+        partial void OnLivreSelectionneChanged(Livre? value)
         {
-            if (livre == null)
+            if (value == null)
             {
                 Isbn = "";
                 Titre = "";
@@ -74,10 +83,10 @@ namespace WpfApp1.ViewModel
             }
             else
             {
-                Isbn = livre.Isbn;
-                Titre = livre.Titre;
-                NbPages = livre.NbPages;
-                AuteurSelectionne = livre.Auteur;
+                Isbn = value.Isbn;
+                Titre = value.Titre;
+                NbPages = value.NbPages;
+                AuteurSelectionne = value.Auteur;
             }
         }
 

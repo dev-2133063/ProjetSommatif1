@@ -150,13 +150,25 @@
   <data name="listColNom" xml:space="preserve">
     <value>Nom :</value>
   </data>
-  <data name="messageLoginInvalide" xml:space="preserve">
-    <value>Nom d'utilisateur ou mot de passe incorrecte.</value>
-  </data>
-  <data name="messageRemplirChamps" xml:space="preserve">
-    <value>Veuillez remplir tout les champs.</value>
-  </data>
   <data name="textBlockTheme" xml:space="preserve">
     <value>Mode obscur</value>
+  </data>
+  <data name="listHeader_isbn" xml:space="preserve">
+    <value>ISBN</value>
+  </data>
+  <data name="listHeader_titre" xml:space="preserve">
+    <value>Titre</value>
+  </data>
+  <data name="listHeader_nom" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="erreur_champsVides" xml:space="preserve">
+    <value>ERREUR : Veuillez remplir tout les champs.</value>
+  </data>
+  <data name="erreur_serveur" xml:space="preserve">
+    <value>ERREUR : Problème du côté serveur.</value>
+  </data>
+  <data name="erreur_loginFailed" xml:space="preserve">
+    <value>ERREUR : Connexion impossible, le nom d'utilisateur ou le mot de passe invalide.</value>
   </data>
 </root>

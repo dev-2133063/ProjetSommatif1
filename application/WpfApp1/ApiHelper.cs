@@ -21,8 +21,16 @@ namespace WpfApp1
             //Sert à préciser le wanted return type
             ApiClient.DefaultRequestHeaders.Accept.Clear();
 
-            ApiClient.DefaultRequestHeaders.Add("apikey", ConfigurationManager.AppSettings["apikey"]);
+            ApiClient.DefaultRequestHeaders.Add("X-API-Key", ConfigurationManager.AppSettings["apikey"]);
             ApiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        public static void SetApiKeyHeader(string apiKey)
+        {
+            if (ApiClient.DefaultRequestHeaders.Contains("X-API-Key"))
+                ApiClient.DefaultRequestHeaders.Remove("X-API-Key");
+
+            ApiClient.DefaultRequestHeaders.Add("X-API-Key", apiKey);
         }
     }
 }

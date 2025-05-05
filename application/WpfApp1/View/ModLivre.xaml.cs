@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp1.ViewModel;
+using WpfApp1.Ressources;
 
 namespace WpfApp1.View
 {
@@ -23,8 +24,22 @@ namespace WpfApp1.View
     {
         public ModLivre()
         {
-            this.DataContext = new ModLivreVM();
             InitializeComponent();
+            UpdateUI();
+        }
+
+        public void UpdateUI()
+        {
+            labelAuteur.Content = Ressources.Ressources.labelAuteur;
+            labelIsbn.Content = Ressources.Ressources.labelIsbn;
+            labelNbPages.Content = Ressources.Ressources.labelNbPages;
+            labelTitre.Content = Ressources.Ressources.labelTitre;
+            groupboxInfos.Header = Ressources.Ressources.groupboxInfos;
+            groupboxLivres.Header = Ressources.Ressources.groupboxLivres;
+            btnEnregistrer.Content = Ressources.Ressources.btnEnregistrer;
+            listColNom.Header = Ressources.Ressources.listHeader_nom;
+            listCol_livreIsbn.Header = Ressources.Ressources.listHeader_isbn;
+            listCol_livreTitre.Header = Ressources.Ressources.listHeader_titre;
         }
     }
 }

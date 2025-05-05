@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using ProjetISDP1.DataAccessLayer;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using System.Configuration;
+using static Mysqlx.Expect.Open.Types.Condition.Types;
+using ZstdSharp.Unsafe;
 
 namespace projet.Security.Authorization
 {
@@ -43,6 +46,8 @@ namespace projet.Security.Authorization
                 return;
             }
 
+            apiKey = SanitizeApiKey(apiKey); ;
+
             DAL dal = new DAL();
             List<string> roles = dal.RolesFactory.GetRolesFromApiKey(apiKey);
 
@@ -59,6 +64,17 @@ namespace projet.Security.Authorization
                 };
                 return;
             }
+        }
+
+        private string SanitizeApiKey(string rawKey)
+        {
+            if (string.IsNullOrWhiteSpace(rawKey)) return string.Empty;
+
+            string key = rawKey.Trim().Trim('"');
+
+            key = new string(key.Where(c => !char.IsControl(c)).ToArray());
+
+            return key;
         }
     }
 }

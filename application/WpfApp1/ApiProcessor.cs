@@ -55,6 +55,7 @@ namespace WpfApp1
                 }
                 else
                 {
+                    
                     throw new Exception(response.Result.ReasonPhrase);
                 }
             }

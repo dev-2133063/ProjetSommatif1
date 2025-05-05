@@ -14,4 +14,19 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Ressources\Ressources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ressources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Ressources\Ressources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ressources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
