@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using WpfApp1.View;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace WpfApp1
 {
@@ -37,27 +38,26 @@ namespace WpfApp1
             }
         }
 
-        public static async Task<IAsyncResult>? ModifierLivre(Livre livre)
+        public static async Task<bool>? ModifierLivre(Livre livre)
         {
             //todo
-            if (livre is null || livre.Id <= 0) return null;
+            if (livre is null || livre.Id <= 0) return false;
 
             string url = $"api/Livre/{livre.Id}"; 
             string json = JsonSerializer.Serialize(livre);
             HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using (Task<HttpResponseMessage> response = ApiHelper.ApiClient.PutAsync(url, content))
+            HttpResponseMessage response = await ApiHelper.ApiClient.PutAsync(url, content);
+
+            if (response.IsSuccessStatusCode)
             {
-                if (response.Result.IsSuccessStatusCode)
-                {
-                    Task<IAsyncResult> result = response.Result.Content.ReadFromJsonAsync<IAsyncResult>();
-                    return await result;
-                }
-                else
-                {
-                    
-                    throw new Exception(response.Result.ReasonPhrase);
-                }
+                return true;
+            }
+            else
+            {
+                // Tu peux lire le message d'erreur si besoin :
+                string error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"{response.StatusCode}: {error}");
             }
         }
 
@@ -101,7 +101,10 @@ namespace WpfApp1
 
             foreach (LivreAPI livre in livresAPI)
             {
-                newLivres.Add(new Livre(livre));
+                Auteur auteur = new Auteur(livre.auteur);
+                Categorie categorie = new Categorie(livre.categorie);
+
+                newLivres.Add(new Livre(livre, auteur, categorie));
             }
 
             return newLivres;
@@ -118,7 +121,5 @@ namespace WpfApp1
 
             return newAuteurs;
         }
-
-
     }
 }

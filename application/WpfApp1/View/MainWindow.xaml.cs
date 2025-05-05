@@ -49,6 +49,7 @@ namespace WpfApp1.View
 
             loginVM.OnNotify += Notification;
             loginVM.OnLoginSuccess += SwitchToModLivreView;
+            modLivreVM.OnNotify += Notification;
         }
 
         public void Notification(string text)

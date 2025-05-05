@@ -28,7 +28,10 @@ namespace WpfApp1.Model.ApiModels
         [JsonProperty(PropertyName = "categorieId")]
         public int categorieId { get; set; }
 
-        [JsonProperty(PropertyName = "date")]
+        [JsonProperty(PropertyName = "auteur")]
         public AuteurAPI auteur { get; set; }
+
+        [JsonProperty(PropertyName = "categorie")]
+        public CategorieAPI categorie { get; set; }
     }
 }

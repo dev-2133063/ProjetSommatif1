@@ -7,15 +7,17 @@ using WpfApp1.Model.ApiModels;
 
 namespace WpfApp1.Model
 {
-    public class Auteur
+    public class Categorie
     {
         public int Id { get; set; }
         public string Nom { get; set; } = string.Empty;
-        public Auteur() { }
-        public Auteur(AuteurAPI auteur)
+
+        public Categorie() { }
+
+        public Categorie(CategorieAPI categorie)
         {
-            Id = auteur.id;
-            Nom = auteur.nom;
+            Id = categorie.id;
+            Nom = categorie.nom;
         }
     }
 }

@@ -171,4 +171,10 @@
   <data name="erreur_loginFailed" xml:space="preserve">
     <value>#ERREUR</value>
   </data>
+  <data name="msg_loginReussi" xml:space="preserve">
+    <value>#ERREUR</value>
+  </data>
+  <data name="msg_modifReussi" xml:space="preserve">
+    <value>#ERREUR</value>
+  </data>
 </root>

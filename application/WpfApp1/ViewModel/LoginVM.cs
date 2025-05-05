@@ -48,7 +48,7 @@ namespace WpfApp1.ViewModel
             if (!string.IsNullOrEmpty(apikey))
             {
                 ApiHelper.SetApiKeyHeader(apikey);
-
+                OnNotify?.Invoke(Ressources.Ressources.msg_loginReussi);
                 OnLoginSuccess?.Invoke();
                 ResetValues();
             }

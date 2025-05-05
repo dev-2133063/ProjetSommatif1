@@ -46,7 +46,7 @@ namespace projet.Security.Authorization
                 return;
             }
 
-            apiKey = SanitizeApiKey(apiKey); ;
+            apiKey = SanitizeApiKey(apiKey);
 
             DAL dal = new DAL();
             List<string> roles = dal.RolesFactory.GetRolesFromApiKey(apiKey);

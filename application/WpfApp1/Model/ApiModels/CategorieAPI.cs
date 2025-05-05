@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace WpfApp1.Model.ApiModels
 {
-    internal class CategorieAPI
+    public class CategorieAPI
     {
         //Results
         [JsonProperty(PropertyName = "id")]

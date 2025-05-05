@@ -16,7 +16,8 @@ namespace WpfApp1.Model
         public int AuteurId { get; set; }
         public int CategorieId { get; set; }
         public Auteur Auteur { get; set; }
-        public Livre(LivreAPI livre)
+        public Categorie Categorie { get; set; }
+        public Livre(LivreAPI livre, Auteur auteur, Categorie categorie)
         {
             Id = livre.id;
             Isbn = livre.isbn;
@@ -24,6 +25,8 @@ namespace WpfApp1.Model
             NbPages = livre.nbPages;
             AuteurId = livre.auteurId;
             CategorieId = livre.categorieId;
+            Auteur = auteur;
+            Categorie = categorie;
         }
 
     }

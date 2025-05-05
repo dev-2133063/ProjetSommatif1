@@ -9,8 +9,6 @@ namespace projet.Security.Authentification
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            Console.WriteLine("CHECKING");
-
             if (!context.HttpContext.Request.Headers.TryGetValue(ApiKeyHeaderName, out var potentialApiKey))
             {
                 var errorResponse = new

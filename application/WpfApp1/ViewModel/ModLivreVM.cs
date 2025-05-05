@@ -11,8 +11,9 @@ using WpfApp1.Model;
 
 namespace WpfApp1.ViewModel
 {
-    public partial class ModLivreVM: ObservableObject
+    public partial class ModLivreVM : ObservableObject
     {
+        public event Action<string>? OnNotify;
         [ObservableProperty]
         private ObservableCollection<Livre>? _livres;
 
@@ -65,11 +66,15 @@ namespace WpfApp1.ViewModel
             LivreSelectionne.AuteurId = AuteurSelectionne.Id;
 
             //todo
-            string? result = Convert.ToString(await ApiProcessor.ModifierLivre(LivreSelectionne));
-            //if (result == WORKED) reset
-            LivreSelectionne = null;
+            if (await ApiProcessor.ModifierLivre(LivreSelectionne))
+            {
+                OnNotify?.Invoke(Ressources.Ressources.msg_modifReussi);
 
-            //else dont reset
+                //reset
+                LivreSelectionne = null;
+                GetAllInformation();
+            }
+
         }
 
         partial void OnLivreSelectionneChanged(Livre? value)

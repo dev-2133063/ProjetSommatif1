@@ -171,4 +171,10 @@
   <data name="erreur_loginFailed" xml:space="preserve">
     <value>ERROR : Login failed, username or password incorrect.</value>
   </data>
+  <data name="msg_loginReussi" xml:space="preserve">
+    <value>Login successful!</value>
+  </data>
+  <data name="msg_modifReussi" xml:space="preserve">
+    <value>Modifications saved</value>
+  </data>
 </root>

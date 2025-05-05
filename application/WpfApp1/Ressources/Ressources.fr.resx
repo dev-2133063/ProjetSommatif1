@@ -171,4 +171,10 @@
   <data name="erreur_loginFailed" xml:space="preserve">
     <value>ERREUR : Connexion impossible, le nom d'utilisateur ou le mot de passe invalide.</value>
   </data>
+  <data name="msg_loginReussi" xml:space="preserve">
+    <value>Connexion Réussie</value>
+  </data>
+  <data name="msg_modifReussi" xml:space="preserve">
+    <value>Modifications établies</value>
+  </data>
 </root>
