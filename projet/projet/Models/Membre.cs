@@ -9,17 +9,22 @@
         public DateTime DateCreation { get; set; }
         public string ApiKey { get; set; } = string.Empty;
         public Membre() { }
-        public Membre(int id, string nom, string courriel, string telephone, DateTime dateCreation, string apikey)
+        public Membre(int id, string nom, string courriel, string telephone, DateTime dateCreation, string apikey = null)
         {
             Id = id;
             Nom = nom;
             Courriel = courriel;
             Telephone = telephone;
             DateCreation = dateCreation;
-            ApiKey = apikey;
 
-            //verification de cle invalide ou null
-            if (string.IsNullOrEmpty(this.ApiKey) || this.ApiKey.Length != 36) GenerateKey();
+            if (string.IsNullOrEmpty(this.ApiKey) || this.ApiKey.Length != 36)
+            {
+                GenerateKey();
+            }
+            else
+            {
+                ApiKey = apikey;
+            }
         }
 
         private void GenerateKey()

@@ -217,14 +217,14 @@ namespace ProjetISDP1.DataAccessLayer.Factories
                 {
                     mySqlCmd.CommandText = "SELECT DISTINCT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
                                            "FROM projet_emprunt emp " +
-                                           "LEFT JOIN projet_livre liv ON emp.LivreId = liv.Id;";
+                                           "LEFT JOIN projet_livre liv ON emp.LivreId = liv.Id" +
+                                           "WHERE emp.MembreId = @membreId;";
                 }
                 else
                 {
                     mySqlCmd.CommandText = "SELECT DISTINCT liv.Id, liv.ISBN, liv.Titre, liv.NbPages, liv.AuteurId, liv.CategorieId " +
                                            "FROM projet_emprunt emp " +
-                                           "LEFT JOIN projet_livre liv ON emp.LivreId = liv.Id" +
-                                           "WHERE emp.MembreId = @membreId;";
+                                           "LEFT JOIN projet_livre liv ON emp.LivreId = liv.Id;";
                 }
 
                 mySqlCmd.Parameters.AddWithValue("@membreId", membreId);

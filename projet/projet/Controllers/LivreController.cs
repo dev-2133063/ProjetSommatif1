@@ -222,6 +222,7 @@ namespace projet.Controllers
         [CustomAuthorize(Roles.Admin)]
         public IActionResult Delete(int id)
         {
+            if (id < 0) return BadRequest();
             if (dal.LivreFactory.Get(id) is null) return NotFound("Ce livre n'existe pas.");
 
             Livre[] livres = dal.LivreFactory.GetAllDejaEmprunte();

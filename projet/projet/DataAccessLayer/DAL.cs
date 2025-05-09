@@ -14,9 +14,11 @@ namespace ProjetISDP1.DataAccessLayer
         private QuotaApiFactory? _quotaApiFactory = null;
         private RolesFactory? _rolesFactory = null;
         private LoginFactory? _loginFactory = null;
+        private UtilityFactory? _utilityFactory = null;
 
         public static string ConnectionString
         {
+            //J'ai pas trop compris comment gerer les differents connexion strings alors j'ai change directement dans default lors de mes tests...
             get
             {
                 var config = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory).AddJsonFile("appsettings.json").Build();
@@ -109,6 +111,17 @@ namespace ProjetISDP1.DataAccessLayer
                     _loginFactory = new LoginFactory();
                 }
                 return _loginFactory;
+            }
+        }
+        public UtilityFactory UtilityFactory
+        {
+            get
+            {
+                if (_utilityFactory == null)
+                {
+                    _utilityFactory = new UtilityFactory();
+                }
+                return _utilityFactory;
             }
         }
     }
